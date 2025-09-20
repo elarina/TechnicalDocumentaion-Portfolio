@@ -49,6 +49,9 @@
 
 ![diagramm](images/system_time.png)
 
+Получившийся скрипт можно скопировать в окно PowerShell и нажать Enter. В результате отобразится системное время.
+![diagramm](images/system_time_output.png)
+
 ## Полезные ссылки
 
 Официальная документация Microsoft о **PowerShell** - https://learn.microsoft.com/ru-ru/powershell/scripting/overview?view=powershell-7.5
