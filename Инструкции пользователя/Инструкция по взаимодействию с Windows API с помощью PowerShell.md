@@ -25,6 +25,7 @@
    
 После запуска PowerShell откроется окно:
 
+![diagramm](images/powershell.png)
 
 ### Взаимодействие с Windows API
 
@@ -44,7 +45,9 @@
 1. Объявите класс с любым названием (в данном примере класс называется **Kernel32**).
 2. Объявите сигнатуру функции **GetSystemTime**.
 3. Подключите с помощью ключевого слова **DllImport** библиотеку "**kernel32.dll**".
-4. Вызовите функцию с помощью команды **[Kernel32]::GetSystemTime([ref]$systemTime)** 
+4. Вызовите функцию с помощью команды **[Kernel32]::GetSystemTime([ref]$systemTime)**
+
+![diagramm](images/system_time.png)
 
 ## Полезные ссылки
 
