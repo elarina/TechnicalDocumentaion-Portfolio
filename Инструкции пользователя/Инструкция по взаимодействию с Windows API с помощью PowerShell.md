@@ -77,7 +77,7 @@
 ![diagramm](images/system_time.png)
 
 Вывод в консоль после выполнения скрипта из примера:
-![diagramm](images/system_time_output.png)
+![diagramm](images/system_time_output2.png)
 
 
 #### Устранение возможных ошибок при запуске
