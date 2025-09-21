@@ -16,12 +16,19 @@
 #### Из меню Пуск
 1. Нажмите Пуск.
 2. В строке поиска введите "powershell".
-3. Найдите вариант Windows PowerShell и запустите приложение.
+3. Найдите вариант Windows PowerShell и щелкните по нему левой кнопкой мыши.
 
 #### Из диалогового окна "Выполнить"
 1. Нажмите Win+R
 2. В открывшемся диалоговом окне введите "powershell"
 3. Нажмите Enter.
+
+#### Запуск от имени администратора.
+
+1. Нажмите Пуск.
+2. В строке поиска введите "powershell".
+3. Найдите вариант Windows PowerShell и щелкните по нему правой кнопкой мыши.
+4. В открывшемся контекстном меню выберите "Запуск от имени администратора".
    
 После запуска PowerShell откроется окно:
 
@@ -76,6 +83,50 @@
 
 ![diagramm](images/system_time_file.png)
 
+#### Устранение возможных ошибок при запуске
+
+**Ошибка политик выполнения**
+
+Ошибка политик выполнения возникает при попытке запуска скрипта в системе с установленными политиками, запрещающими выполнение сценариев в системе.
+
+![diagramm](images/system_time_run_error.png)
+
+Чтобы устранить ошибку политик выполнения нужно установить соответствующую политику. 
+
+Для этого:
+
+1. Запустите PowerShell от имени администратора.
+2. Выполните команду **Set-ExecutionPolicy RemoteSigned -Scope CurrentUser**
+3. Среда в ответ выдаст вопрос, в ответ на который нужно ввести символ **A** и нажать Enter.
+
+Политики выполнения изменены: 
+
+![diagramm](images/system_execution_policy.png)
+
+**Ошибка отсутсвия цифровой подписи**
+
+При отсутствии цифровой подписи для скрипта возникает ошибка при попытке его выполнения в PowerShell.
+Чтобы устранить ошибку запуска на своем компьютере, нужно подписать скрипт с помощью самозаверяющего сертификата.
+
+Для этого:
+1. Выполните в PowerShell команду для создания самозаверяющего сертификата:
+
+   $params = @{
+    Subject = 'CN=PowerShell Code Signing Cert'
+    Type = 'CodeSigning'
+    CertStoreLocation = 'Cert:\CurrentUser\My'
+    HashAlgorithm = 'sha256'
+   }
+   $cert = New-SelfSignedCertificate @params
+
+2. Выполните команду:
+   $cert = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert |
+    Select-Object -First 1
+
+   Set-AuthenticodeSignature **systime.ps1** $cert
+
+   где systime.ps1 - имя вашего файла.
+
 ## Полезные ссылки
 
 Официальная документация Microsoft о **PowerShell** - https://learn.microsoft.com/ru-ru/powershell/scripting/overview?view=powershell-7.5
@@ -83,3 +134,5 @@
 Официальная документация Microsoft о **Windows API** - https://learn.microsoft.com/ru-ru/windows/win32/desktop-programming
 
 Политики выполнения PowerShell - https://learn.microsoft.com/ru-ru/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.5
+
+Подписание скрипта - https://learn.microsoft.com/ru-ru/powershell/module/microsoft.powershell.core/about/about_signing?view=powershell-7.5
